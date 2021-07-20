@@ -6,17 +6,20 @@
 
 namespace btl
 {
+
     template <typename T>
     class list
     {
         struct _list_node;
+
+        template <typename data_type>
+        class _iterator;
+
     public:
         using value_type = T;
         using reference = value_type&;
         using const_reference = const value_type&;
 
-        template <typename data_type>
-        class _iterator;
 
         using iterator = _iterator<_list_node>;
         using const_iterator = _iterator<const _list_node>;
@@ -38,7 +41,10 @@ namespace btl
 
         ~list()
         {
+            // break the cicle
             _tail->prev->next = nullptr;
+
+            // delete elements one by one
             _list_node *iter = _tail;
             while (iter != nullptr) {
                 _list_node *tmp = iter;
@@ -143,6 +149,7 @@ namespace btl
 
     private:
         data_type *_ptr = nullptr;
+
     };
 
     template <typename T>
@@ -162,6 +169,7 @@ namespace btl
         _list_node *prev = nullptr;
         value_type data = value_type();
     };
-}
+
+} // namespace btl
 
 #endif // LIST_H
