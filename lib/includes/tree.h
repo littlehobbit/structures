@@ -10,6 +10,7 @@ namespace btl
     {
 
     public:
+
         using key_type = Key;
 
         bst()

@@ -61,11 +61,32 @@ namespace btl
             _tail->prev = new_node;
         }
 
-        reference front();
-        const_reference front() const;
+        // TODO: insert
+        std::size_t count(const_reference value)
+        {
+            std::size_t count = 0;
+            auto iter = this->cbegin(), end = this->cend();
+            while (iter != end) {
+                if (*iter == value)
+                    count++;
+            }
+            return count;
+        }
 
-        reference back();
-        const_reference back() const;
+        /* Для соответсвия сигнатуре вставки у деревьев и хэш-таблицы, чтобы можно было
+         * использовать как словарь.
+         */
+        bool insert(const_reference value)
+        {
+            // Check if value already in list
+            if (this->count(value)) {
+                return false;
+            }
+
+            // Insert by default in end of list
+            this->push_back(value);
+            return true;
+        }
 
         iterator begin() const
         {
