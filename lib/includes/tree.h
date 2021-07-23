@@ -20,6 +20,11 @@ namespace btl
             _list->next = _list->prev = _list;
         }
 
+        ~bst()
+        {
+            delete_tree(_root);
+        }
+
         // return true if node was inserted
         bool insert(const key_type& key)
         {
@@ -104,6 +109,21 @@ namespace btl
             } else {
                 parent->insertAfter(new_node);
             }
+        }
+
+        // TODO: избавиться от повтора кода
+        void delete_tree(_tree_node *node)
+        {
+            if (node == nullptr)
+                return;
+
+            if (node->left != nullptr)
+                delete_tree(node->left);
+
+            if (node->right != nullptr)
+                delete_tree(node->right);
+
+            delete node;
         }
 
         std::size_t _size = 0;
